@@ -1,0 +1,209 @@
+<!-- Main template extends -->
+{% extends 'master.html' %}
+<!-- this is heading section  -->
+{% block before_head %}
+<title>Naimul - Full Stack Developer</title>
+{% endblock before_head %}
+<!-- this is main block section  -->
+{% block main %}
+<section class="aboutMain">
+    <div class="container">
+        <div class="col-12 m-auto col-md-12 ">
+            <div class="cover-img">
+                <img src="/static/images/cover.gif" class="" alt="">
+            </div>
+        </div>
+        <div>
+            <div class=" profile-info">
+                <div class="personalimg">
+                    <div class="profile-img">
+                        <img src="/static/images/profile.jpg" class="" alt="">
+                    </div>
+
+                </div>
+                <div class="personal info">
+                    <h2>Naimul islam</h2>
+                    <p>full stack developer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="personal-decs">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-8 m-auto">
+                        <div class="personal-image">
+                            <img class="" src="/static/images/image2.jpg" alt="Personal Photo">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="personaldecs">
+                        <p class="card-text">
+                            Hello, I'm Naimul Islam a passionate Fullstack Web Developer and Programmer.I develop web
+                            applications and REST API in PHP AND LARAVEL. Mainly I'm working with development frameworks
+                            PHP & LARAVEL for backend. I'm working hard to improve my skills and have passion in
+                            programming. There is lot of study in 2yrs makes me familiar with programming and still
+                            studying to be a perfect and expert programmer. I have developed a mindset of deep study and
+                            hard work in this field and I think, I have acquired the ability to move to any programming
+                            language and development framework at anytime. I'm now working as a freelance web developer
+                            and now I want to work with an organization.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="wrapAbout">
+        <div class="container">
+            <div class="skill">
+                <h2>MY skill</h2>
+                <div class="skillBer">
+                    <ul class="nav nav-pills justify-content-center">
+                        <li class="nav-item">
+                            <a href="#front-end" data-bs-toggle="pill" class="nav-link active">Front-End</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#back-end" data-bs-toggle="pill" class="nav-link">Back-End</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tools" data-bs-toggle="pill" class="nav-link">Tools</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="skill-content">
+                    <div class="tab-content">
+                        <div id="front-end" class="tab-pane fade show active">
+                            <div class="col-10 col-md-6 justify-content-center m-auto">
+                                <?php
+
+$sql1 = "SELECT * FROM `skill` WHERE skill_cate=3";
+$run1 = mysqli_query( $con, $sql1 );
+if ( mysqli_num_rows( $run1 ) > 0 ) {
+    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
+        ?>
+                                <div class="skill-box">
+                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <div class="skill-bar">
+                                        <span class="skill-per" style="width:".<?php echo $row1['exp'] ?>."%">
+                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <?php
+}
+} else {
+    echo "NO Data Found";
+}
+?>
+                            </div>
+                        </div>
+                        <!-- back #back-end -->
+                        <div id="back-end" class="tab-pane fade">
+                            <div class="col-10 col-md-6 justify-content-center m-auto">
+                                <?php
+
+$sql1 = "SELECT * FROM `skill` WHERE skill_cate=2";
+$run1 = mysqli_query( $con, $sql1 );
+if ( mysqli_num_rows( $run1 ) > 0 ) {
+    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
+        ?>
+                                <div class="skill-box">
+                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <div class="skill-bar">
+                                        <span class="skill-per" style="width:<?php echo $row1['exp'] ?>%">
+                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <?php
+}
+} else {
+    echo "NO Data Found";
+}
+?>
+
+
+                            </div>
+
+                        </div>
+                        <!-- back-end end -->
+                        <!-- tools start  -->
+                        <div id="tools" class="tab-pane fade">
+                            <div class="col-10 col-md-6 justify-content-center m-auto">
+                                <?php
+
+$sql1 = "SELECT * FROM `skill` WHERE skill_cate=24";
+$run1 = mysqli_query( $con, $sql1 );
+if ( mysqli_num_rows( $run1 ) > 0 ) {
+    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
+        ?>
+                                <div class="skill-box">
+                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <div class="skill-bar">
+                                        <span class="skill-per" style="width:<?php echo $row1['exp'] ?>%">
+                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <?php
+}
+} else {
+    echo "NO Data Found";
+}
+?>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="exprience">
+                <div class="container">
+                    <div class="col-md-2 social-title">
+                        Expertise In
+                    </div>
+                    <div class="wrap-exp">
+                        <div class="col-12 single-exp">
+                            <h5>Web Design</h5>
+                            <p>HTML/HTML5, CSS/CSS3, Sass, Bootstrap, Tailwind CSS</p>
+
+                        </div>
+                        <div class="col-12 single-exp">
+                            <h5> Frontend Development</h5>
+                            <p>JavaScript, Jquery, Ajax</p>
+                        </div>
+                        <div class="col-12 single-exp">
+                            <h5> Backend Development</h5>
+                            <p>PHP, LaraVel</p>
+                        </div>
+                        <div class="col-12 single-exp">
+                            <h5> Database</h5>
+                            <p>MYSQL, SQLlite</p>
+                        </div>
+                        <div class="col-12 single-exp">
+                            <h5> Version Control</h5>
+                            <p>Git & GitHub</p>
+                        </div>
+                        <div class="col-12 single-exp">
+                            <h5> Application Deployment</h5>
+                            <p>Live Server,Vercel, Netlify,GitHub</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock main %}

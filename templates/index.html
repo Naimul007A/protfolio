@@ -1,0 +1,182 @@
+<!-- Main template extends -->
+{% extends 'master.html' %}
+<!-- this is heading section  -->
+{% block before_head %}
+<title>Naimul - Full Stack Developer</title>
+{% endblock before_head %}
+<!-- this is main block section  -->
+{% block main %}
+<section id="mainHeader">
+  <div class="container">
+    <div class="wrapHead">
+      <div class="row">
+        <div class="col-md-6 justify-content-center">
+          <div class="headTitle">
+            <h2>Hello, i'm <span class="name"> Naimul Islam </span></h2>
+          </div>
+          <div class="headTyped">
+            <h2>I'm a <span id="typed"></span></h2>
+          </div>
+          <div class="home-btn">
+            <div class="col-12 col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <a href="/contact/" target="blank" class="hire-btn"
+                    >Hire Me</a
+                  >
+                </div>
+                <div class="col-md-6">
+                  <a href="/protfolio/" target="blank" class="prot-btn"
+                    >Protfolio</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 justify-content-end">
+          <img
+            class="head-img"
+            src="/static/images/image2.jpg"
+            alt=""
+            srcset=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="blog-post">
+  <div class="container">
+    <div class="wrapBlog">
+      <h2 class="text-center">Reasons to read blogs</h2>
+      <div class="row">
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img
+              src="/static/image/web-design.png"
+              class="blog-img"
+              alt="..."
+            />
+            <div class="blog-body">
+              <h3 class="blog-title">Web Design</h3>
+              <p class="blog-text">
+                Whether you’re a freelance web designer or work in an agency or
+                design studio, you’ll want to keep up to date with all the
+                latest developments in the industry. By doing this, you’ll
+                ensure that you’re always offering the most informed and
+                creative design solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img
+              src="/static/image/web-development.png"
+              class="blog-img"
+              alt="..."
+            />
+            <div class="blog-body">
+              <h3 class="blog-title">Web Development</h3>
+              <p class="blog-text">
+                If you’re in the web development business, you can take it that
+                you’ll never be done learning. In fact, even the best around
+                admit that there’s always something new to learn. Sounds
+                daunting, right? That doesn’t have to be so.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img src="/static/image/psd.png" class="blog-img" alt="..." />
+            <div class="blog-body">
+              <h3 class="blog-title">PSD TO HTML</h3>
+              <p class="blog-text">
+                With all the modern frameworks and libraries cropping up almost
+                daily, one skill remains indispensable for any web developer
+                just like it was at the dawn of the Internet era. We are talking
+                about converting a Photoshop design to HTML and CSS.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img
+              src="/static/image/responsive.png"
+              class="blog-img"
+              alt="..."
+            />
+            <div class="blog-body">
+              <h3 class="blog-title">Responsive Design</h3>
+              <p class="blog-text">
+                The days of designing a website for a single desktop screen are
+                well and truly over. Technology and the expansion of mobile
+                websites are pushing web designers to re-think how their work is
+                displayed across various devices.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img
+              src="/static/image/landing-page.png"
+              class="blog-img"
+              alt="..."
+            />
+            <div class="blog-body">
+              <h3 class="blog-title">Landing Page Design</h3>
+              <p class="blog-text">
+                A landing page is a standalone website page designed to
+                encourage visitors to take 1 specific action. Think about the
+                homepage of your blog. On your homepage, you might display your
+                latest blog posts, link to your about me page, show an email
+                optin form, and more.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card-blog text-center justify-content-center">
+            <img src="/static/image/wordpress.png" class="blog-img" alt="..." />
+            <div class="blog-body">
+              <h3 class="blog-title">WordPress</h3>
+              <p class="blog-text">
+                You can create a simple blog page using WordPress, but If you
+                truly want to astound and stupify your readers, you need
+                something more. You can either use plugins and themes, each with
+                their limitations, or you can use Elementor, and all in one
+                solution.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+<!-- this is script area  -->
+{% block before_body %}
+<script src="/static/js/typed.js"></script>
+<script>
+  var typed = new Typed("#typed", {
+    strings: [
+      "Freelancer",
+      "Web designer",
+      "Web developer",
+      "wordpress developer",
+      "Wordpress Designer",
+    ],
+    typeSpeed: 60,
+    backspeed: 60,
+    backdealy: 1500,
+    loop: true,
+  });
+</script>
+{% endblock before_body %}

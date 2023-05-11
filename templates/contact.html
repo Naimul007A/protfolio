@@ -1,0 +1,104 @@
+<!-- Main template extends -->
+{% extends 'master.html' %}
+<!-- this is heading section  -->
+{% block before_head %}
+<title>Contact With Naimul - Full Stack Developer</title>
+{% endblock before_head %}
+<!-- this is main block section  -->
+{% block main %}
+<section class="contact">
+    <div class="container">
+        <div class="wrapContact">
+            <h2>Contact Me</h2>
+            <div class="form-content col-11 col-md-7 m-auto">
+                <form id="get_sms">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="usr_name" placeholder=" Enter your First & Last Name" required>
+                        <div id="validationname" class="invalid-feedback">
+                            <h5>Please Fill Up.</h5>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        <div id="validationname" class="invalid-feedback">
+                            <h5>Please Fill Up.</h5>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sms_decs" class="form-label">Write Massage Here</label>
+                        <textarea class="form-control" id="sms_decs" name="sms_decs" rows="3" required></textarea>
+                        <div id="validationname" class="invalid-feedback">
+                            <h5>Please Fill Up.</h5>
+                        </div>
+                    </div>
+                    <button type="submit" id="formSubmit" class="btn btn-dark mb-3 float-end btn-lg">SEND</button>
+
+                </form>
+            </div>
+
+            <div class="social-media">
+                <div class="col-md-2 social-title">
+                    Contact Me On
+                </div>
+                <div class="social-content">
+                    <div class="row">
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="https://www.facebook.com/Naimul.boy/" target="blank"> <i class="fa fa-facebook"></i> <span>Facebook</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="mailto:mdnaimul2090@gmail.com" target="blank"> <i class="fa fa-envelope"></i>
+                                <span>Mail</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="#"> <i class="fa fa-twitter" target="blank"></i> <span>Twiter</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="#"> <i class="fa fa-linkedin" target="blank"></i><span>Linkedin</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="https://www.instagram.com/naimul150/" target="blank"> <i class="fa fa-instagram" target="blank"></i> <span>Instragram</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="#"> <i class="fa fa-telegram"></i> <span>Telegram</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="https://github.com/Naimul007A"> <i class="fa fa-github" target="blank"></i> <span>Github</span></a>
+                        </div>
+                        <div class="col-12 col-md-3 single-social">
+                            <a href="#"> <i class="fa fa-skype" target="blank"></i> <span>Skype</span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="contact-ditails">
+                <h2>contact details</h2>
+                <div class="row">
+                    <div class="address col-12 m-auto justify-content-center ">
+                      <div class="d-flex">
+                            <div class="phone">
+                                <span><i class="fa fa-phone"></i></span>
+                                <p>+8809638138014</p>
+                                <!-- <p>+8801784-016727</p> -->
+                            </div>
+                            <div class="phone">
+                                <span><i class="fa fa-location-arrow"></i></i></span>
+                                <p>Middle paikpara,ahamed nagar,mirpur1,Dhaka Bangladesh</p>
+
+                            </div>
+                            <div class="phone">
+                                <span><i class="fa fa-envelope"></i></span>
+                                <p>mdnaimul2090@gmail.com</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}

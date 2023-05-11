@@ -1,0 +1,231 @@
+<!-- Main template extends -->
+{% extends 'master.html' %}
+<!-- this is heading section  -->
+{% block before_head %}
+<title>Naimul's Protfolio - Full Stack Developer</title>
+{% endblock before_head %}
+<!-- this is main block section  -->
+{% block main %}
+<section id="protfolio">
+    <div class="container">
+        <div class="wrapProt">
+            <div class="protHead">
+                <h2>Explore My Previous Works</h2>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-pills justify-content-center">
+                        <li class="nav-tiem">
+                            <a href="#all" class="nav-link active" data-bs-toggle="pill">All</a>
+                        </li>
+                        <li class="nav-tiem">
+                            <a href="#front" class="nav-link " data-bs-toggle="pill">Front End</a>
+                        </li>
+                        <li class="nav-tiem">
+                            <a href="#back" class="nav-link" data-bs-toggle="pill">Back End</a>
+                        </li>
+                        <li class="nav-tiem">
+                            <a href="#wordpress" class="nav-link" data-bs-toggle="pill">Wordpress</a>
+                        </li>
+                        <li class="nav-tiem">
+                            <a href="#other" class="nav-link" data-bs-toggle="pill">Others</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- all post star -->
+                    <?php
+$sql1 = "SELECT * FROM `post` ORDER BY post_id DESC";
+$run1 = mysqli_query( $con, $sql1 );
+
+?>
+                    <div class="tab-pane fade show active " id="all">
+                        <div class="row">
+                            <!-- protfolio deatils show  -->
+                            <?php
+if ( mysqli_num_rows( $run1 ) > 0 ) {
+    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
+        ?>
+                            <div class="col-lg-4 content-all">
+                                <a data-id="<?php echo $row1["post_id"] ?>" href="" id="modalBoxShow">
+                                    <div class="protBody">
+
+                                        <div class="portImg"><img src="admin/upload/<?php echo $row1["post_img"]; ?>"
+                                                alt="post">
+                                        </div>
+                                        <div class="protDecs"><?php echo $row1["post_title"] ?></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php
+}
+} else {
+    echo "<h2>No Data Found.</h2>";
+}
+?>
+
+
+                        </div>
+                    </div>
+
+                    <!-- All post end -->
+                    <!-- front end post start -->
+
+                    <?php
+$sql2 = "SELECT * FROM `post` WHERE post_cate=3 ORDER BY post_id DESC";
+$run2 = mysqli_query( $con, $sql2 );
+
+?>
+                    <div class="tab-pane fade" id="front">
+                        <div class="row">
+                            <!-- protfolio deatils show  -->
+                            <?php
+if ( mysqli_num_rows( $run2 ) > 0 ) {
+    while ( $row2 = mysqli_fetch_array( $run2 ) ) {
+        ?>
+                            <div class="col-lg-4 content-all">
+                                <a href="#!" data-id="<?php echo $row2['post_id'] ?>" id="modalBoxShow">
+                                    <div class="protBody">
+
+                                        <div class="portImg">
+                                            <img src="admin/upload/<?php echo $row2["post_img"]; ?>" alt="post">
+                                        </div>
+                                        <div class="protDecs"><?php echo $row2["post_title"] ?></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php
+}
+} else {
+    echo "<h2 class='text-light'>No Data Found.</h2>";
+}
+?>
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- front-end post end -->
+                    <!-- back-end post start  -->
+                    <?php
+$sql3 = "SELECT * FROM `post` WHERE post_cate=2 ORDER BY post_id DESC";
+$run3 = mysqli_query( $con, $sql3 );
+
+?>
+                    <div class="tab-pane fade" id="back">
+                        <div class="row">
+                            <!-- protfolio deatils show  -->
+                            <?php
+if ( mysqli_num_rows( $run3 ) > 0 ) {
+    while ( $row3 = mysqli_fetch_array( $run3 ) ) {
+        ?>
+                            <div class="col-lg-4 content-all">
+                                <a href="#!" data-id="<?php echo $row3['post_id'] ?>" id="modalBoxShow">
+                                    <div class="protBody">
+
+                                        <div class="portImg"><img src="admin/upload/<?php echo $row3["post_img"]; ?>"
+                                                alt="post">
+                                        </div>
+                                        <div class="protDecs"><?php echo $row3["post_title"] ?></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php
+}
+} else {
+    echo "<h2 class='text-light'>No Data Found.</h2>";
+}
+?>
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- back-end post end -->
+                    <!-- wordpress post start  -->
+                    <?php
+$sql4 = "SELECT * FROM `post` WHERE post_cate=5 ORDER BY post_id DESC";
+$run4 = mysqli_query( $con, $sql4 );
+
+?>
+                    <div class="tab-pane fade " id="wordpress">
+                        <div class="row">
+                            <!-- protfolio deatils show  -->
+                            <?php
+if ( mysqli_num_rows( $run4 ) > 0 ) {
+    while ( $row4 = mysqli_fetch_array( $run4 ) ) {
+        ?>
+                            <div class="col-lg-4 content-all">
+                                <a href="#!" data-id="<?php echo $row4['post_id'] ?>" id="modalBoxShow">
+                                    <div class="protBody">
+
+                                        <div class="portImg"><img src="admin/upload/<?php echo $row4["post_img"]; ?>"
+                                                alt="post">
+                                        </div>
+                                        <div class="protDecs"><?php echo $row4["post_title"] ?></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php
+}
+} else {
+    echo "<h2 class='text-light'>No Data Found.</h2>";
+}
+?>
+
+
+                        </div>
+                    </div>
+                    <!-- wordpress post end -->
+                    <!-- Others post start  -->
+                    <?php
+$sql5 = "SELECT * FROM `post` WHERE post_cate=24 ORDER BY post_id DESC";
+$run5 = mysqli_query( $con, $sql5 );
+
+?> <div class="tab-pane fade " id="other">
+                        <div class="row">
+                            <!-- protfolio deatils show  -->
+                            <?php
+if ( mysqli_num_rows( $run5 ) > 0 ) {
+    while ( $row5 = mysqli_fetch_array( $run5 ) ) {
+        ?>
+                            <div class="col-lg-4 content-all">
+                                <a href="#!" data-id="<?php echo $row5['post_id'] ?>" id="modalBoxShow">
+                                    <div class="protBody">
+                                        <div class="portImg">
+                                            <img src="admin/upload/<?php echo $row5["post_img"]; ?>" alt="post">
+                                        </div>
+                                        <div class="protDecs"><?php echo $row5["post_title"] ?></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php
+}
+} else {
+    echo "<h2 class='text-light'>No Data Found.</h2>";
+}
+?>
+
+
+                        </div>
+                    </div>
+                    <!-- others post end -->
+                </div>
+                <!-- modal box -->
+                <section id="modalbox">
+                    <div id="myModal" class="modal-box">
+
+                    </div>
+                </section>
+
+            </div>
+            <div>
+            </div>
+</section>
+{% endblock main %}
+<script src="js/ajaxUser.js"></script>
+
