@@ -28,3 +28,4 @@ def load_user():
 
 from Controllers import *
 from Controllers.admin import *
+from Models import Admin

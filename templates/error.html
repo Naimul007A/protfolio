@@ -1,0 +1,11 @@
+{% with messages = get_flashed_messages() %}
+<!-- if message -->
+{% if messages %}
+<!-- loop -->
+{% for message in messages %}
+<div class="alert alert-danger">{{ message }}</div>
+{% endfor %} {% endif %} {% endwith %}
+<!-- error message show -->
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
