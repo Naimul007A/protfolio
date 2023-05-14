@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 # create the app
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.config["SECRET_KEY"] = "thisisascecretkey"
 # create the extentiom
 db = SQLAlchemy(app)
 app.app_context().push()
+migrate = Migrate(app, db)
 
 
 def __repr__(self) -> str:
@@ -28,4 +30,4 @@ def load_user():
 
 from Controllers import *
 from Controllers.admin import *
-from Models import Admin
+from Models import *
