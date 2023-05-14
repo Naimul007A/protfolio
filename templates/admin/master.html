@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="assets/img/admin favicon.png" type="image/x-icon">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="/static/css/admin.css" rel="stylesheet" />
+    <link href="/static/css/admin/custom.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    {% block head %}
+
+    {% endblock head %}
+</head>
+
+{% include 'admin/partisal/header.html' %}
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            {% block main %}
+
+            {% endblock main %}
+        </div>
+    </main>
+    {% include 'admin/partisal/footer.html' %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+    <script src="/static/js/admin/scripts.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/admin/ajax.js"></script>
+    {% block footer %}
+
+    {% endblock %}
+    </body>
+
+</html>

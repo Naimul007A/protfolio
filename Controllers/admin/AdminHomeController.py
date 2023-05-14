@@ -1,13 +1,6 @@
-from app import app, db
+from app import app, LoginCheck
 from flask import redirect, render_template, request, session, url_for, flash
 from Models import Admin
-
-
-def LoginCheck(successURL, failedURL, data=""):
-    if "logged_in" in session:
-        return render_template(successURL, data=data)
-    else:
-        return redirect(url_for(failedURL))
 
 
 @app.route("/admin/", methods=["GET", "POST"])
@@ -36,8 +29,7 @@ def admin_login():
 
 @app.route("/admin/dashboard/")
 def admin_dashboard():
-    data = "hello"
-    return LoginCheck("admin/dashboard.html", "admin_login", data)
+    return LoginCheck("admin/dashboard.html", "admin_login")
 
 
 # admin create

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  ///add cate modal show
+  //add cate modal show
   $("#addCate").on("click", function (e) {
     e.preventDefault();
     $("#cateaddmodal").show().fadeIn();
@@ -9,16 +9,51 @@ $(document).ready(function () {
     $("#cateaddmodal").hide().fadeOut();
   });
   //cate load data
-  function loadData() {
+  function CategoryLoad() {
     $.ajax({
-      url: "loadCate.php",
+      url: "/admin/categorise/",
       type: "POST",
       success: function (data) {
-        $("#showcate_data").html(data);
+        let table = "";
+        if (data.length > 0) {
+          let index = 0;
+          data.forEach((cate) => {
+            table += `
+                <tr>
+                  <td>${(index += 1)}</td>
+                    <td>${cate.name}</td>
+                    <td>${cate.post_no}</td>
+                    <td>
+                    <a href="javascript:void" data-id="${
+                      cate.id
+                    }" id="edit_category">edit</a>
+                    <a href="javascript:void" data-id="${
+                      cate.id
+                    }" id="delete_category">delete</a>
+                    </td>
+                </tr>
+            `;
+          });
+        } else {
+          table += `
+          <tr>
+             <td colspan="4">
+                <div class="alert alert-danger text-center">
+                  <h3>No Data Found</h3>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        $("#table_body").html(table);
+      },
+      error: function (error) {
+        console.log(error);
       },
     });
   }
-  loadData();
+  CategoryLoad();
   //new Category add
   $("#submitBtn").on("click", function (e) {
     e.preventDefault();
@@ -26,13 +61,16 @@ $(document).ready(function () {
     if (catename == "") {
       $("#cate_name").addClass("is-invalid");
     } else {
-      var alldata = $("#formadd_cate").serialize();
+      const form = $("#formadd_cate")[0];
+      const formdata = new FormData(form);
       $.ajax({
-        url: "addcategory.php",
+        url: "/admin/categorise/add/",
         type: "POST",
-        data: alldata,
+        data: formdata,
+        contentType: false,
+        processData: false,
         success: function (data) {
-          if (data == 1) {
+          if (data == "1") {
             swal({
               title: "Data Added!",
               text: "data add successfully!",
@@ -42,7 +80,7 @@ $(document).ready(function () {
             $("#formadd_cate")[0].reset();
             $("#cateaddmodal").hide().fadeOut();
 
-            loadData();
+            CategoryLoad();
           } else {
             swal({
               title: "Data Not Added!",
@@ -58,7 +96,7 @@ $(document).ready(function () {
     }
   });
   // delete category
-  $(document).on("click", "#delete", function (e) {
+  $(document).on("click", "#delete_category", function (e) {
     e.preventDefault();
     var cateid = $(this).data("id");
     // alert(cateid);
@@ -71,17 +109,16 @@ $(document).ready(function () {
     }).then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "deletecategory.php",
+          url: "/admin/categorise/delete/" + cateid + "/",
           type: "POST",
-          data: { cate_id: cateid },
           success: function (data) {
             // console.log(data);
-            if (data == 1) {
+            if (data == "1") {
               // alert(data);
               swal("Your Data has been deleted!", {
                 icon: "success",
               });
-              loadData();
+              CategoryLoad();
             } else {
               swal("Data Not deleted!", {
                 icon: "error",
@@ -97,37 +134,38 @@ $(document).ready(function () {
     $("#cateeditmodal").hide();
   });
   //update category load data & show modal
-  $(document).on("click", "#edit", function (e) {
+  $(document).on("click", "#edit_category", function (e) {
     e.preventDefault();
     var cate_id = $(this).data("id");
     $.ajax({
-      url: "cateupdata.php",
-      type: "POST",
-      data: { cate_id: cate_id },
+      url: "/admin/categorise/edit/" + cate_id + "/",
+      type: "GET",
       success: function (data) {
-        $("#cateloadShow").html(data);
+        // console.log(data[0].name);
+        $("#categoryName").val(data[0].name);
+        $("#cate_id").val(data[0].id);
         $("#cateeditmodal").show();
       },
     });
   });
   ///update category
-  $(document).on("click", "#submit-Btn", function (e) {
+  $(document).on("click", "#update_cate", function (e) {
     e.preventDefault();
 
-    var cate_name = $("#cateName").val();
+    var cate_name = $("#categoryName").val();
     var cate_id = $("#cate_id").val();
     // alert(cate_name);
     if (cate_name == "") {
-      $("#cateName").addClass("is-invalid");
+      $("#categoryName").addClass("is-invalid");
     } else {
       $.ajax({
-        url: "update_cate.php",
+        url: "/admin/categorise/edit/" + cate_id + "/",
         type: "POST",
-        data: { cate_id: cate_id, cate_name: cate_name },
+        data: { cate_name: cate_name },
         success: function (data) {
           if (data == 1) {
             swal("Data Updated", "Data has been updated", "success");
-            loadData();
+            CategoryLoad();
             $("#cateeditmodal").hide().fadeOut();
           } else {
             swal("Data Not Updated", "Data hasn't been updated", "error");
