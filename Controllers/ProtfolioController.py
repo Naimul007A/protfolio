@@ -1,5 +1,6 @@
 from app import app
 from flask import redirect, render_template, request
+from Models.Skill import Skill
 
 
 @app.route("/protfolio/")
@@ -9,7 +10,12 @@ def protfolio():
 
 @app.route("/about_me/")
 def about():
-    return render_template("about.html")
+    backend = Skill.query.filter_by(category_id=1).all()
+    frontend = Skill.query.filter_by(category_id=2).all()
+    tools = Skill.query.filter_by(category_id=3).all()
+    return render_template(
+        "about.html", backend=backend, frontend=frontend, tools=tools
+    )
 
 
 @app.route("/contact_me/")

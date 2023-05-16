@@ -390,7 +390,7 @@ body {
 .work-content span::after {
   content: "";
   position: absolute;
-  width: 285px;
+  width: 325px;
   background: #ffff;
   border-bottom: 1px solid #fff;
   bottom: -9%;
@@ -424,6 +424,32 @@ body {
   height: 70px;
   font-size: 18px;
   border: 1px solid #fff;
+}
+.hire-btn:hover {
+  background: #f000;
+  padding: 22px;
+  border-radius: 50px;
+  color: #1dd881;
+  font-weight: 500;
+  width: 160px;
+  display: block;
+  text-align: center;
+  height: 70px;
+  font-size: 18px;
+  border: 1px solid #fff;
+}
+.prot-btn:hover {
+  background: #1a5555;
+  padding: 22px;
+  border-radius: 50px;
+  color: #1dd881;
+  font-weight: 500;
+  width: 160px;
+  display: block;
+  text-align: center;
+  height: 70px;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 .work-post {
   padding: 45px 0px;
@@ -557,7 +583,7 @@ body {
   }
 
   .work-content span::after {
-    width: 235px;
+    width: 270px;
   }
 }
 /* modal style */

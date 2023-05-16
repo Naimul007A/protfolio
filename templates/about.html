@@ -80,89 +80,73 @@
                     <div class="tab-content">
                         <div id="front-end" class="tab-pane fade show active">
                             <div class="col-10 col-md-6 justify-content-center m-auto">
-                                <?php
-
-$sql1 = "SELECT * FROM `skill` WHERE skill_cate=3";
-$run1 = mysqli_query( $con, $sql1 );
-if ( mysqli_num_rows( $run1 ) > 0 ) {
-    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
-        ?>
+                                {% for front in frontend %}
                                 <div class="skill-box">
-                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <span class="title">
+                                        {{front.name}}
+                                    </span>
                                     <div class="skill-bar">
-                                        <span class="skill-per" style="width:".<?php echo $row1['exp'] ?>."%">
-                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        <span class="skill-per" style='width:{{ front.experience }}%'>
+                                            <span class="tooltip1">
+                                                {{front.experience}} %
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
-
-                                <?php
-}
-} else {
-    echo "NO Data Found";
-}
-?>
+                                {% endfor %}
                             </div>
                         </div>
                         <!-- back #back-end -->
                         <div id="back-end" class="tab-pane fade">
                             <div class="col-10 col-md-6 justify-content-center m-auto">
-                                <?php
 
-$sql1 = "SELECT * FROM `skill` WHERE skill_cate=2";
-$run1 = mysqli_query( $con, $sql1 );
-if ( mysqli_num_rows( $run1 ) > 0 ) {
-    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
-        ?>
+                                {% if backend|length >0 %}
+                                {% for back in backend %}
                                 <div class="skill-box">
-                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <span class="title">
+                                        {{back.name}}
+                                    </span>
                                     <div class="skill-bar">
-                                        <span class="skill-per" style="width:<?php echo $row1['exp'] ?>%">
-                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        <span class="skill-per" style='width:{{ back.experience }}%'>
+                                            <span class="tooltip1">
+                                                {{back.experience}} %
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
-
-                                <?php
-}
-} else {
-    echo "NO Data Found";
-}
-?>
-
-
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-dark">
+                                    <h6 class="fw-bold text-center">No Backend Skill found</h6>
+                                </div>
+                                {% endif %}
                             </div>
-
                         </div>
                         <!-- back-end end -->
                         <!-- tools start  -->
                         <div id="tools" class="tab-pane fade">
                             <div class="col-10 col-md-6 justify-content-center m-auto">
-                                <?php
-
-$sql1 = "SELECT * FROM `skill` WHERE skill_cate=24";
-$run1 = mysqli_query( $con, $sql1 );
-if ( mysqli_num_rows( $run1 ) > 0 ) {
-    while ( $row1 = mysqli_fetch_array( $run1 ) ) {
-        ?>
+                                {% if tools|length >0 %}
+                                {% for tool in tools %}
                                 <div class="skill-box">
-                                    <span class="title"><?php echo $row1['skill_name'] ?></span>
+                                    <span class="title">
+                                        {{tool.name}}
+                                    </span>
                                     <div class="skill-bar">
-                                        <span class="skill-per" style="width:<?php echo $row1['exp'] ?>%">
-                                            <span class="tooltip1"><?php echo $row1['exp'] ?>%</span>
+                                        <span class="skill-per" style='width:{{ tool.experience }}%'>
+                                            <span class="tooltip1">
+                                                {{tool.experience}} %
+                                            </span>
                                         </span>
                                     </div>
                                 </div>
-
-                                <?php
-}
-} else {
-    echo "NO Data Found";
-}
-?>
-
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-dark">
+                                    <h6 class="fw-bold text-center">No Tools Skill found</h6>
+                                </div>
+                                {% endif %}
                             </div>
-
                         </div>
                     </div>
                 </div>

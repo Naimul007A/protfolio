@@ -9,6 +9,5 @@ def home():
 
 
 @app.route("/services/")
-@login_required
 def service():
     return render_template("service.html")
