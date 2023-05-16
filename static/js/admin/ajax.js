@@ -24,10 +24,10 @@ $(document).ready(function () {
                     <td>${cate.name}</td>
                     <td>${cate.post_no}</td>
                     <td>
-                    <a href="javascript:void" data-id="${
+                    <a href="javascript:void(0)" data-id="${
                       cate.id
                     }" id="edit_category">edit</a>
-                    <a href="javascript:void" data-id="${
+                    <a href="javascript:void(0)" data-id="${
                       cate.id
                     }" id="delete_category">delete</a>
                     </td>
@@ -176,34 +176,70 @@ $(document).ready(function () {
     }
   });
   ///skill data load
-  function Dataload(page) {
+  function get_skills() {
     $.ajax({
-      url: "skillloadData.php",
+      url: "/admin/skills/",
       type: "POST",
-      data: { page_no: page },
       success: function (data) {
-        $("#skill_Load").html(data);
+        let table = "";
+        if (data.length > 0) {
+          index = 0;
+          data.forEach((skill) => {
+            table += `
+            <tr>
+            <td>${(index += 1)}</td>
+            <td>${skill.name}</td>
+            <td>${skill.exprience} %</td>
+            <td>${skill.category}</td>
+            <td>
+                 <a href="javascript:void(0)" data-id="${
+                   skill.id
+                 }" id="edit_skill">edit</a>
+                <a href="javascript:void(0)" data-id="${
+                  skill.id
+                }" id="delete_skill">delete</a>
+                </td>
+            </tr>
+            
+            `;
+          });
+        } else {
+          table += `
+          <tr>
+             <td colspan="5">
+                <div class="alert alert-danger text-center">
+                  <h3>No Data Found</h3>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+        $("#skillTable_body").html(table);
       },
     });
   }
-  Dataload();
-  //pagination code
-  $(document).on("click", "#pagination a", function (e) {
-    e.preventDefault();
-    var page_id = $(this).attr("id");
-    Dataload(page_id);
-  });
+  get_skills();
+
   ///add skill modal show
   $("#skill_Add").on("click", function (e) {
-    $("#addmodal").show().fadeIn();
-  });
-
-  ///add skill modal hide
-  $("#close-btn").on("click", function () {
-    $("#addmodal").hide().fadeOut();
+    e.preventDefault();
+    $.ajax({
+      url: "/admin/skills/add/",
+      type: "GET",
+      success: function (data) {
+        let table = '<option value="0">Select Category</option>';
+        data.forEach((category) => {
+          table += `
+          <option value="${category.id}">${category.name}</option>
+          `;
+        });
+        $("#skill_category").html(table);
+        $("#skillAddModal").modal("show").fadeIn();
+      },
+    });
   });
   //add skill data
-  $("#submit_Btn").on("click", function (e) {
+  $("#skillAdd").on("click", function (e) {
     e.preventDefault();
     var name = $("#skill-name").val();
     var exp = $("#skill-exp").val();
@@ -212,22 +248,22 @@ $(document).ready(function () {
     } else if (exp == "") {
       $("#skill-exp").addClass("is-invalid");
     } else {
-      var dataall = $("#formadd_skill").serialize();
+      var dataall = $("#addSkillForm").serialize();
       $.ajax({
-        url: "addskill.php",
+        url: "/admin/skills/add/",
         type: "POST",
         data: dataall,
         success: function (data) {
-          if (data == 1) {
+          if (data == "1") {
             swal({
               title: "Data Added!",
               text: "data add successfully!",
               icon: "success",
               button: "OK",
             });
-            $("#formadd_skill")[0].reset();
-            $("#addmodal").hide().fadeOut();
-            Dataload();
+            $("#addSkillForm")[0].reset();
+            $("#skillAddModal").modal("hide").fadeOut();
+            get_skills();
           } else {
             swal({
               title: "Data Not Added!",
@@ -235,8 +271,8 @@ $(document).ready(function () {
               icon: "error",
               button: "OK",
             });
-            $("#formadd_skill")[0].reset();
-            $("#addmodal").hide().fadeOut();
+            $("#addSkillForm")[0].reset();
+            $("#skillAddModal").modal("hide").fadeIn();
           }
         },
       });
@@ -247,49 +283,55 @@ $(document).ready(function () {
     e.preventDefault();
     var skill_id = $(this).data("id");
     $.ajax({
-      url: "skillAction.php",
-      type: "POST",
-      data: { skill_id: skill_id, editmodal_load: 0 },
+      url: "/admin/skills/edit/" + skill_id + "/",
+      type: "GET",
       success: function (data) {
-        // console.log(data);
-        $("#updatemodal-form").html(data);
+        // console.log(data[0].categories);
+        $("#ud-skill-name").val(data[0].skill[0].name);
+        $("#ud-skill-exp").val(data[0].skill[0].exprience);
+        $("#ud-skill-id").val(data[0].skill[0].id);
+        let category = "";
+        data[0].categories.forEach((cate) => {
+          category += `
+          <option ${data[0].skill[0].category == cate.id ? "selected" : ""} 
+          value="${cate.id}">${cate.name}</option>
+          `;
+        });
+        $("#ud_skill_category").html(category);
+        $("#skillUpdateModal").modal("show").fadeIn();
       },
     });
-    $("#Updatemodal").show();
   });
-  //update skill modal hide
-  $(document).on("click", "#close-btn", function (e) {
-    e.preventDefault();
-    $("#Updatemodal").hide();
-  });
+
   // update skill data save
-  $(document).on("click", "#skillupdate_Btn", function (e) {
+  $(document).on("click", "#skillUpdate", function (e) {
     e.preventDefault();
-    var name = $("#skill-names").val();
-    var exp = $("#skill-exps").val();
+    let name = $("#ud-skill-name").val();
+    let exp = $("#ud-skill-exp").val();
+    let skill_id = $("#ud-skill-id").val();
     // alert(name);
     if (name == "") {
-      $("#skill-names").addClass("is-invalid");
+      $("#ud-skill-name").addClass("is-invalid");
     } else if (exp == "") {
-      $("#skill-exps").addClass("is-invalid");
+      $("#ud-skill-exp").addClass("is-invalid");
     } else {
-      var dataall = $("#formupdate_skill").serialize();
+      var dataall = $("#updateSkillForm").serialize();
       $.ajax({
-        url: "skillAction.php",
+        url: "/admin/skills/edit/" + skill_id + "/",
         type: "POST",
         data: dataall,
         success: function (data) {
-          console.log(data);
-          if (data == 1) {
+          // console.log(data);
+          if (data == "1") {
             swal({
               title: "Data Updated!",
               text: "data Update successfully!",
               icon: "success",
               button: "OK",
             });
-            $("#formupdate_skill")[0].reset();
-            $("#Updatemodal").hide().fadeOut();
-            Dataload();
+            $("#updateSkillForm")[0].reset();
+            $("#skillUpdateModal").modal("hide").fadeOut();
+            get_skills();
           } else {
             swal({
               title: "Data Not Updated!",
@@ -297,8 +339,8 @@ $(document).ready(function () {
               icon: "error",
               button: "OK",
             });
-            $("#formupdate_skill")[0].reset();
-            $("#Updatemodal").hide().fadeOut();
+            $("#updateSkillForm")[0].reset();
+            $("#skillUpdateModal").modal("hide").fadeOut();
           }
         },
       });
@@ -307,7 +349,7 @@ $(document).ready(function () {
   ///delete skill data
   $(document).on("click", "#delete_skill", function (e) {
     e.preventDefault();
-    var skill_id = $(this).data("id");
+    const skill_id = $(this).data("id");
     // alert(skill_id);
     swal({
       title: "Are you sure?",
@@ -318,15 +360,14 @@ $(document).ready(function () {
     }).then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "deleteskill.php",
+          url: "/admin/skills/delete/" + skill_id + "/",
           type: "POST",
-          data: { skill_id: skill_id },
           success: function (data) {
-            if (data == 1) {
+            if (data == "1") {
               swal("Your Data has been deleted!", {
                 icon: "success",
               });
-              Dataload();
+              get_skills();
             } else {
               swal("Data Not deleted!", {
                 icon: "error",

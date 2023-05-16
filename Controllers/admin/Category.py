@@ -1,25 +1,8 @@
 from app import app, LoginCheck, db
-from flask import redirect, render_template, request, session, url_for, flash, jsonify
+from flask import request, jsonify
 from Models.Category import Category
-import json
 
 
-class CategoryEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Category):
-            return {
-                "id": obj.id,
-                "name": obj.name,
-                "post_no": obj.post_no,
-                "created_at": obj.created_at,
-            }
-        return super().default(obj)
-
-
-app.json_encoder = CategoryEncoder
-
-
-# kaj kore nah ata oh dekhsi ami
 @app.route("/admin/categorise/", methods=["GET", "POST"])
 def get_categories():
     if request.method == "POST":

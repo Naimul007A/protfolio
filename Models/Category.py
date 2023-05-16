@@ -10,4 +10,4 @@ class Category(db.Model):
     post_no = db.Column(db.Integer, default=0)
     created_at = db.Column(DateTime, default=datetime.datetime.utcnow)
     posts = db.relationship("Post", backref="category")
-    posts = db.relationship("Skill", backref="scate")
+    skills = db.relationship("Skill", backref="scate")
