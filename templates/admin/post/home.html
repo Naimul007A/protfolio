@@ -1,0 +1,124 @@
+<!-- main template include  -->
+{% extends 'admin/master.html' %}
+<!-- title include  -->
+{% block head %}
+<title> All Posts - Admin Dashboard</title>
+{% endblock head %}
+<!-- main body include -->
+{% block main %}
+<h1 class="mt-4">Post</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{{url_for('admin_dashboard')}}">Dashboard</a></li>
+    <li class="breadcrumb-item active">Post</li>
+</ol>
+<div class="container">
+    <div class="col-md-10 m-auto">
+        <div class="skilladd">
+            <a href="{{url_for('add_post')}}" id="post_Add"><i class="fa-solid fa-plus"></i><span>Add</span></a>
+        </div>
+        <div class="">
+            <table class="table table-bordered border-danger">
+                <thead>
+                    <tr>
+                        <th>#S.N</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Category</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="PostTableBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- category add modal start -->
+<div class="modal" id="skillAddModal">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><strong>Add Skill</strong> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="addSkillForm">
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Name :</strong> </label>
+                        <input type="text" id="skill-name" name="skill_name" placeholder="Your Skill Name"
+                            class="form-control">
+                        <div class="invalid-feedback">
+                            Please choose a skill.
+                        </div>
+
+                    </div>
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Exprience :</strong></label>
+                        <input type="number" id="skill-exp" name="skill_exp" placeholder="Your Exprience This SKill"
+                            class="form-control">
+                        <div class="invalid-feedback">
+                            This field Required.
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Category :</strong></label>
+                        <select class="form-select" name="skill_category" id="skill_category">
+                            <option value="0">Select Category</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="submit" id="skillAdd" class="btn btn-primary">Add Skill</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- category add modal end       -->
+<!-- categoty update modal start -->
+<div class="modal" id="skillUpdateModal">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><strong>Update Skill</strong> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="updateSkillForm">
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Name :</strong> </label>
+                        <input type="text" id="ud-skill-name" name="skill_name" placeholder="Your Skill Name"
+                            class="form-control">
+                        <input type="hidden" id="ud-skill-id">
+                        <div class="invalid-feedback">
+                            Please choose a skill.
+                        </div>
+
+                    </div>
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Exprience :</strong></label>
+                        <input type="number" id="ud-skill-exp" name="skill_exp" placeholder="Your Exprience This SKill"
+                            class="form-control">
+                        <div class="invalid-feedback">
+                            This field Required.
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <label for="" class="form-label"><strong>Category :</strong></label>
+                        <select class="form-select" name="skill_category" id="ud_skill_category">
+
+                        </select>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="submit" id="skillUpdate" class="btn btn-primary">Update Skill</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

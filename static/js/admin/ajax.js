@@ -26,10 +26,10 @@ $(document).ready(function () {
                     <td>
                     <a href="javascript:void(0)" data-id="${
                       cate.id
-                    }" id="edit_category">edit</a>
+                    }" id="edit_category"><i class="fa-solid fa-pen-to-square"></i></a>
                     <a href="javascript:void(0)" data-id="${
                       cate.id
-                    }" id="delete_category">delete</a>
+                    }" id="delete_category"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             `;
@@ -194,10 +194,10 @@ $(document).ready(function () {
             <td>
                  <a href="javascript:void(0)" data-id="${
                    skill.id
-                 }" id="edit_skill">edit</a>
+                 }" id="edit_skill"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a href="javascript:void(0)" data-id="${
                   skill.id
-                }" id="delete_skill">delete</a>
+                }" id="delete_skill"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
             
@@ -378,88 +378,40 @@ $(document).ready(function () {
       }
     });
   });
-  ///show email
-  function showMail(page) {
-    $.ajax({
-      url: "mailLoad.php",
-      type: "POST",
-      data: { page_no: page },
-      success: function (data) {
-        $("#show_mail").html(data);
-      },
-    });
-  }
-  showMail();
-  ///pagination code
-  $(document).on("click", "#pagination a", function (e) {
-    e.preventDefault();
-    var page = $(this).attr("id");
-    showMail(page);
-  });
-  ////delete mail
-  $(document).on("click", "#delete_mail", function (e) {
-    e.preventDefault();
-    var id = $(this).data("id");
-
-    swal({
-      title: "Are you sure?",
-      text: "you will not be able to recover this imaginary file!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        $.ajax({
-          url: "deleteMail.php",
-          type: "POST",
-          data: { id: id },
-          success: function (data) {
-            if (data == 1) {
-              swal(
-                "Your Data Has been delete !",
-                "data delete successfully!",
-                "success"
-              );
-              showMail();
-            } else {
-              swal(
-                "Your Data Not delete !",
-                "data delete unsuccessfull!",
-                "error"
-              );
-            }
-          },
-        });
-      }
-    });
-  });
-
   ///Post Add
-  $("#post_submitBtn").on("click", function (e) {
+  $("#postAdd").on("click", function (e) {
     e.preventDefault();
-    for (instance in CKEDITOR.instances) {
-      CKEDITOR.instances[instance].updateElement();
-    }
-
-    var title = $("#post_title").val();
-    var cate = $("#post_cate").val();
-    var decs = $("#post_decs").val();
-    if (title == "" || cate == "" || decs == "") {
+    // for (instance in CKEDITOR.instances) {
+    //   CKEDITOR.instances[instance].updateElement();
+    // }
+    $("#postAdd").attr("disabled", true);
+    var title = $("#postTitle").val();
+    var cate = $("#category").val();
+    document.querySelector("[name=postDec]").value = instance.getData();
+    if (title == "" || cate == "0") {
       swal("All fill required", "", "error");
+      $("#postAdd").attr("disabled", false);
     } else {
-      var data = $("#Add_post")[0];
+      var data = $("#AddPostForm")[0];
       var alldata = new FormData(data);
       $.ajax({
-        url: "addpost_core.php",
+        url: "/admin/posts/add/",
         type: "POST",
         data: alldata,
         contentType: false,
         processData: false,
+        beforeSend: function () {
+          // setting a timeout
+          $("#postAdd").val("Processing......");
+        },
         success: function (data) {
-          if (data == 1) {
-            $("#Add_post")[0].reset();
+          if (data == "1") {
             // swal("Data insert Successfully!","","success");
-            window.location.href = "post.php";
+            $("#postAdd").val("published");
+            setTimeout(function () {
+              $("#AddPostForm")[0].reset();
+              window.location.href = "/admin/posts/";
+            }, 3000);
           } else {
             swal("Data insert unSuccess!", "", "error");
           }
@@ -500,13 +452,47 @@ $(document).ready(function () {
     }
   });
   ///post data load
-  function postload(page) {
+  function postload() {
     $.ajax({
-      url: "postLoad.php",
+      url: "/admin/posts/",
       type: "POST",
-      data: { page_no: page },
       success: function (data) {
-        $("#showPostData").html(data);
+        // console.log(data);
+        let table = "";
+        if (data.length > 0) {
+          index = 0;
+          data.forEach((post) => {
+            table += `
+            <tr>
+            <td>${(index += 1)}</td>
+            <td>${post.title}</td>
+            <td>${post.image} </td>
+            <td>${post.category}</td>
+            <td>${post.created_at}</td>
+            <td>
+                 <a href="javascript:void(0)" data-id="${
+                   post.id
+                 }" id="editPost"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="javascript:void(0)" data-id="${
+                  post.id
+                }" id="deletePost"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            
+            `;
+          });
+        } else {
+          table += `
+          <tr>
+             <td colspan="6">
+                <div class="alert alert-danger text-center">
+                  <h3>No Data Found</h3>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+        $("#PostTableBody").html(table);
       },
     });
   }
@@ -519,11 +505,9 @@ $(document).ready(function () {
     postload(page_id);
   });
   //post delete
-  $(document).on("click", "#delete_post", function (e) {
+  $(document).on("click", "#deletePost", function (e) {
     e.preventDefault();
     var post_id = $(this).data("id");
-    var cid = $(this).data("cid");
-    // alert(skill_id);
     swal({
       title: "Are you sure?",
       text: "you will not be able to recover this data!",
@@ -533,11 +517,10 @@ $(document).ready(function () {
     }).then((willDelete) => {
       if (willDelete) {
         $.ajax({
-          url: "postDelete.php",
+          url: "/admin/posts/delete/" + post_id + "/",
           type: "POST",
-          data: { post_id: post_id, cid: cid },
           success: function (data) {
-            if ((data = "yes")) {
+            if ((data = "1")) {
               swal(
                 "Your Data has been deleted!",
                 "data delete successfully",

@@ -4,3 +4,10 @@
 .nav-link:hover {
   color: #51ffae !important;
 }
+.table a {
+  padding: 7px;
+  color: #8000ff;
+}
+.table a:hover {
+  color: #3d1168;
+}
