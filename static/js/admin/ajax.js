@@ -387,8 +387,9 @@ $(document).ready(function () {
     $("#postAdd").attr("disabled", true);
     var title = $("#postTitle").val();
     var cate = $("#category").val();
+    var file = $("#postImage").val();
     document.querySelector("[name=postDec]").value = instance.getData();
-    if (title == "" || cate == "0") {
+    if (title == "" || cate == "0" || file == "") {
       swal("All fill required", "", "error");
       $("#postAdd").attr("disabled", false);
     } else {
@@ -466,13 +467,13 @@ $(document).ready(function () {
             <tr>
             <td>${(index += 1)}</td>
             <td>${post.title}</td>
-            <td>${post.image} </td>
+            <td><img src="/static/uploads/${post.image}"> </td>
             <td>${post.category}</td>
             <td>${post.created_at}</td>
             <td>
-                 <a href="javascript:void(0)" data-id="${
+                 <a href="/admin/posts/edit/${
                    post.id
-                 }" id="editPost"><i class="fa-solid fa-pen-to-square"></i></a>
+                 }/" id="editPost"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a href="javascript:void(0)" data-id="${
                   post.id
                 }" id="deletePost"><i class="fa-solid fa-trash"></i></a>

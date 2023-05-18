@@ -1,13 +1,14 @@
 from app import app, LoginCheck, db
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, redirect, url_for
 from Models.Post import Post
 from Models.Category import Category
+import uuid
 
 
 @app.route("/admin/posts/", methods=["GET", "POST"])
 def get_posts():
     if request.method == "POST":
-        posts = Post.query.all()
+        posts = Post.query.order_by(Post.created_at.desc()).all()
         post_list = []
         for post in posts:
             post_list.append(
@@ -27,13 +28,19 @@ def get_posts():
 @app.route("/admin/posts/add/", methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
+        if request.files["postImage"]:
+            file = request.files["postImage"]
+            # Generate a unique filename
+            filename = str(uuid.uuid4()) + file.filename[file.filename.rfind(".") :]
+            print(filename)
+            file.save("static/uploads/" + filename)
         post = Post(
             title=request.form["postTitle"],
             description=request.form["postDec"],
             category_id=request.form["category"],
             is_live=request.form["isLive"],
             source_code=request.form["sourceCode"],
-            image="null",
+            image=filename,
         )
         db.session.add(post)
         db.session.commit()
@@ -55,31 +62,25 @@ def delete_post(id):
 @app.route("/admin/posts/edit/<int:id>/", methods=["GET", "POST"])
 def edit_post(id):
     if request.method == "POST":
+        if request.files["postImage"]:
+            file = request.files["postImage"]
+            # Generate a unique filename
+            filename = str(uuid.uuid4()) + file.filename[file.filename.rfind(".") :]
+            print(filename)
+            file.save("static/uploads/" + filename)
+        else:
+            filename = request.form["oldImage"]
+
         post = Post.query.filter_by(id=id).first()
-        post.name = request.form["skill_name"]
-        post.experience = request.form["skill_exp"]
-        post.category_id = request.form["skill_category"]
-        db.session.add(skill)
+        post.title = request.form["postTitle"]
+        post.is_live = request.form["isLive"]
+        post.description = request.form["postDec"]
+        post.source_code = request.form["sourceCode"]
+        post.category_id = request.form["category"]
+        post.image = filename
+        db.session.add(post)
         db.session.commit()
-        return "1"
-    skill = Post.query.filter_by(id=id).first()
-    skill_list = []
-    skill_list.append(
-        {
-            "id": skill.id,
-            "name": skill.name,
-            "exprience": skill.experience,
-            "category": skill.category_id,
-        }
-    )
+        return redirect(url_for("get_posts"))
+    post = Post.query.filter_by(id=id).first()
     categories = Category.query.all()
-    category_list = []
-    for category in categories:
-        category_list.append(
-            {
-                "id": category.id,
-                "name": category.name,
-            }
-        )
-    data = [{"categories": category_list, "skill": skill_list}]
-    return jsonify(data)
+    return render_template("admin/post/editPost.html", categories=categories, post=post)

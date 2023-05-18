@@ -11,3 +11,6 @@
 .table a:hover {
   color: #3d1168;
 }
+.table img {
+  width: 25%;
+}

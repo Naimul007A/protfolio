@@ -6,51 +6,59 @@
 {% endblock head %}
 <!-- main body include -->
 {% block main %}
-<h1 class="mt-4">ADD Post</h1>
+<h1 class="mt-4">Update Post</h1>
 <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="{{url_for('get_posts')}}">Post</a></li>
-    <li class="breadcrumb-item active">ADD Post</li>
+    <li class="breadcrumb-item active">Update Post</li>
 </ol>
 <div class="col-12 col-md-9 m-auto py-4">
     <div class="card p-2">
         <div class="card-header py-3 bg-secondary">
-            <h3 class="fw-bold text-center text-danger">ADD NEW POST</h3>
+            <h3 class="fw-bold text-center text-danger">Update POST</h3>
         </div>
         <div class="card-body">
-            <form action="" id="AddPostForm">
+            <form action="{{ url_for('edit_post',id=post.id) }}" method="post" enctype="multipart/form-data">
                 <div class="py-2">
                     <label for="postTitle" class="form-label">Title</label>
-                    <input type="text" name="postTitle" id="postTitle" class="form-control">
+                    <input type="text" name="postTitle" value="{{post.title}}" class="form-control">
                 </div>
                 <div class="py-2">
                     <label for="isLive" class="form-label">Live server Link</label>
-                    <input type="text" name="isLive" id="isLive" class="form-control">
+                    <input type="text" name="isLive" value="{{post.is_live}}" class="form-control">
                 </div>
                 <div class="py-2">
                     <label for="sourceCode" class="form-label">Source Code</label>
-                    <input type="text" name="sourceCode" id="sourceCode" class="form-control">
+                    <input type="text" name="sourceCode" value="{{post.source_code}}" class="form-control">
                 </div>
                 <div class="py-2">
                     <label for="category" class="form-label">Category</label>
                     <select name="category" id="category" class="form-select">
                         <option value="0">Select a Category</option>
                         {% for category in categories %}
+                        {% if post.category_id == category.id %}
+                        <option selected value="{{category.id}}">{{category.name}}</option>
+                        {% else %}
                         <option value="{{category.id}}">{{category.name}}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
                 <div class="py-2">
                     <label for="editor" class="form-label">Description</label>
-                    <textarea name="postDec" id="editor" class="form-control"></textarea>
+                    <textarea name="postDec" id="editor" class="form-control">{{post.description}}</textarea>
                 </div>
                 <div class="py-2">
+                    <div style="width: 30%;">
+                        <img src="/static/uploads/{{post.image}}" alt="">
+                    </div>
+                    <input type="hidden" name="oldImage" value="{{post.image}}">
                     <label for="postImage" class="form-label">Features Image</label>
                     <input type="file" name="postImage" id="postImage" class="form-control">
                 </div>
         </div>
         <div class="card-footer">
             <div class="py-2">
-                <input type="submit" class="btn btn-danger" id="postAdd" value="Add Post">
+                <input type="submit" class="btn btn-danger" value="Update Post">
             </div>
             </form>
         </div>
