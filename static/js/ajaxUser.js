@@ -1,24 +1,24 @@
 $(document).ready(function () {
   ///contact sms send  script
-  $("#formSubmit").on("click", function (e) {
+  $("#MailSubmit").on("click", function (e) {
     e.preventDefault();
     var name = $("#name").val();
     var email = $("#email").val();
     var decs = $("#sms_decs").val();
-    if (name == "") {
-      $("#name").addClass("is-invalid");
-    } else if (email == "") {
+    if (email == "") {
       $("#email").addClass("is-invalid");
+    } else if (name == "") {
+      $("#name").addClass("is-invalid");
     } else if (decs == "") {
       $("#sms_decs").addClass("is-invalid");
     } else {
       var smsData = $("#get_sms").serialize();
       $.ajax({
-        url: "messageSend.php",
+        url: "/mail/add/",
         type: "POST",
         data: smsData,
         success: function (data) {
-          if (data == 1) {
+          if (data == "1") {
             $("#get_sms")[0].reset();
             swal({
               title: "Message Send!",

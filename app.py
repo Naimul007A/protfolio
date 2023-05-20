@@ -26,7 +26,7 @@ login_manager.login_view = "login"
 
 def LoginCheck(successURL, failedURL, data=""):
     if "logged_in" in session:
-        return render_template(successURL, data=data)
+        return render_template(successURL, datas=data)
     else:
         return redirect(url_for(failedURL))
 

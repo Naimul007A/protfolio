@@ -1,6 +1,7 @@
-from app import app, LoginCheck
-from flask import redirect, render_template, request, session, url_for, flash
+from app import app, LoginCheck, db
+from flask import redirect, render_template, request, session, url_for, flash, jsonify
 from Models import Admin
+from Models.Mail import Mail
 
 
 @app.route("/admin/", methods=["GET", "POST"])
@@ -27,8 +28,22 @@ def admin_login():
         return render_template("admin/login.html")
 
 
-@app.route("/admin/dashboard/")
+@app.route("/admin/dashboard/", methods=["GET", "POST"])
 def admin_dashboard():
+    if request.method == "POST":
+        emails = Mail.query.order_by(Mail.created_at.desc()).all()
+        email_list = []
+        for email in emails:
+            email_list.append(
+                {
+                    "id": email.id,
+                    "email": email.mail,
+                    "subject": email.subject,
+                    "message": email.message,
+                    "created_at": email.created_at,
+                }
+            )
+        return jsonify(email_list)
     return LoginCheck("admin/dashboard.html", "admin_login")
 
 
@@ -50,3 +65,12 @@ def admin_dashboard():
 def admin_logout():
     session.clear()
     return redirect(url_for("admin_login"))
+
+
+@app.route("/admin/mail/delete/<int:id>/", methods=["POST"])
+def delete_mail(id):
+    if request.method == "POST":
+        mail = Mail.query.filter_by(id=id).first()
+        db.session.delete(mail)
+        db.session.commit()
+        return "1"

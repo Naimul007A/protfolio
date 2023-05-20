@@ -13,17 +13,16 @@
             <div class="form-content col-11 col-md-7 m-auto">
                 <form id="get_sms">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="usr_name"
-                            placeholder=" Enter your First & Last Name" required>
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                            required>
                         <div id="validationname" class="invalid-feedback">
                             <h5>Please Fill Up.</h5>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
-                            required>
+                        <label for="name" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="name" name="subject" placeholder=" Enter Subject">
                         <div id="validationname" class="invalid-feedback">
                             <h5>Please Fill Up.</h5>
                         </div>
@@ -35,7 +34,7 @@
                             <h5>Please Fill Up.</h5>
                         </div>
                     </div>
-                    <button type="submit" id="formSubmit" class="btn btn-dark mb-3 float-end btn-lg">SEND</button>
+                    <button type="submit" id="MailSubmit" class="btn btn-dark mb-3 float-end btn-lg">SEND</button>
 
                 </form>
             </div>
@@ -85,3 +84,6 @@
     </div>
 </section>
 {% endblock main %}
+{% block before_body %}
+<script src="/static/js/ajaxUser.js "></script>
+{% endblock before_body %}

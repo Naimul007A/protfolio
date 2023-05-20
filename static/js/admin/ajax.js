@@ -499,12 +499,6 @@ $(document).ready(function () {
   }
   postload();
 
-  ///post pagination
-  $(document).on("click", "#pagination a", function (e) {
-    e.preventDefault();
-    var page_id = $(this).attr("id");
-    postload(page_id);
-  });
   //post delete
   $(document).on("click", "#deletePost", function (e) {
     e.preventDefault();
@@ -538,7 +532,80 @@ $(document).ready(function () {
       }
     });
   });
-  ///post edit
-
+  ///mail load
+  function get_mail() {
+    $.ajax({
+      url: "/admin/dashboard/",
+      type: "POST",
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        console.log(res);
+        let table = "";
+        if (res.length > 0) {
+          index = 0;
+          res.forEach((data) => {
+            table += `
+            <tr> 
+            <td>${(index += 1)}</td>
+            <td>${data.email}</td>
+            <td>${data.subject}</td>
+            <td>${data.message}</td>
+            <td>${data.created_at}</td>
+            <td>
+            <a href="javascript:void(0)" id="mailDelete" data-id=${
+              data.id
+            }><i class="fa-solid fa-trash"></i></a>
+            </td>
+            </tr>
+           `;
+          });
+        } else {
+          table += `
+          <tr>
+            <td colspan='6'>
+              <div class="alert alert-danger fw-bold text-center">No Mail found</div>
+            </td>
+          </tr>
+          `;
+        }
+        $("#MailLoad").html(table);
+      },
+    });
+  }
+  get_mail();
+  //mail delete
+  $(document).on("click", "#mailDelete", function (e) {
+    e.preventDefault();
+    var post_id = $(this).data("id");
+    swal({
+      title: "Are you sure?",
+      text: "you will not be able to recover this data!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: "/admin/mail/delete/" + post_id + "/",
+          type: "POST",
+          success: function (data) {
+            if ((data = "1")) {
+              swal(
+                "Your Data has been deleted!",
+                "data delete successfully",
+                "success"
+              );
+              get_mail();
+            } else {
+              swal("Data Not deleted!", {
+                icon: "error",
+              });
+            }
+          },
+        });
+      }
+    });
+  });
   ///ready end
 });

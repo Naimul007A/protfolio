@@ -1,7 +1,8 @@
-from app import app
+from app import app, db
 from flask import redirect, render_template, request, jsonify
 from Models.Skill import Skill
 from Models.Post import Post
+from Models.Mail import Mail
 
 
 @app.route("/protfolio/")
@@ -41,7 +42,7 @@ def show_post(id):
 def about():
     backend = Skill.query.filter_by(category_id=1).all()
     frontend = Skill.query.filter_by(category_id=2).all()
-    tools = Skill.query.filter_by(category_id=3).all()
+    tools = Skill.query.filter_by(category_id=4).all()
     return render_template(
         "about.html", backend=backend, frontend=frontend, tools=tools
     )
@@ -50,3 +51,16 @@ def about():
 @app.route("/contact_me/")
 def contact():
     return render_template("contact.html")
+
+
+@app.route("/mail/add/", methods=["POST"])
+def add_mail():
+    if request.method == "POST":
+        mail = Mail(
+            subject=request.form["subject"],
+            message=request.form["sms_decs"],
+            mail=request.form["email"],
+        )
+        db.session.add(mail)
+        db.session.commit()
+        return "1"
