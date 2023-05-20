@@ -3,12 +3,13 @@
 *.pyc
 /__pycache__
 
-/instance
+
 /.vscode
 .pytest_cache/
 .coverage
 /htmlcov
 /static/uploads/
+/instance/
 /dist
 /build
 *.egg-info

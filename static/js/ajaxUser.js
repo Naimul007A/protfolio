@@ -44,19 +44,40 @@ $(document).ready(function () {
     e.preventDefault();
     var post_id = $(this).data("id");
     $.ajax({
-      url: "protfolio-post-load.php",
+      url: "/protfolio/show/" + post_id + "/",
       type: "POST",
-      data: { post_id: post_id },
       success: function (data) {
-        // console.log(data);
-        $("#myModal").html(data);
+        console.log(data);
+        let post = "";
+        post += `
+        <div class="modal-header">
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div>
+        <img src="/static/uploads/${data[0].image}" class="img-fluid" alt="POST IMAGE">
+        </div>
+        <div class="py-2">
+          <h2 class="modal-title">${data[0].title}</h2>
+         </div>
+           <p class="pb-2">
+           ${data[0].desc}
+           </p>`;
+
+        if (data[0].isLive !== "") {
+          post += ` <a href="${data[0].isLive}" class="btn btn-secondary" >Live Server</a>`;
+        }
+        if (data[0].sourceCode !== "") {
+          post += `
+                 <a href="${data[0].sourceCode}" class="btn btn-primary" >Source Code</a>
+          `;
+        }
+        post += ` </div>`;
+        $(".modal-content").html(post);
+        $("#postModal").modal("show").fadeIn();
       },
     });
-    $("#modalbox").show();
   });
-  //modal hide
-  $(document).on("click", ".modal-close-icon", function () {
-    $("#modalbox").hide();
-  });
+
   ///document ready end
 });
